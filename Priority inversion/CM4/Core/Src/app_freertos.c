@@ -159,7 +159,7 @@ void LowPriority_Task(void *argument)
 
 		for(i=0;i<2000000;i++)//模拟低优先级任务占用信号量
 		{
-			taskYIELD();//发起任务调度
+			osThreadYield();//发起任务调度
 		}
 
 		printf("LowPriority_Task 释放信号量!\r\n");
