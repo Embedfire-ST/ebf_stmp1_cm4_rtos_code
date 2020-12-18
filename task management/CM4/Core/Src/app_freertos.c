@@ -55,14 +55,14 @@ osThreadId_t LEDTaskHandle;
 const osThreadAttr_t LEDTask_attributes = {
   .name = "LEDTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 256 * 4
+  .stack_size = 128 * 4
 };
 /* Definitions for KEYTask */
 osThreadId_t KEYTaskHandle;
 const osThreadAttr_t KEYTask_attributes = {
   .name = "KEYTask",
   .priority = (osPriority_t) osPriorityLow,
-  .stack_size = 256 * 4
+  .stack_size = 128 * 4
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -127,8 +127,8 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_LED_Task */
 void LED_Task(void *argument)
 {
-	/* USER CODE BEGIN LED_Task */
-	printf("这是一个[野火]-STM32全系列开发板-CMSIS_RTOS任务管理实验！\n\n");
+  /* USER CODE BEGIN LED_Task */
+	printf("这是�?个[野火]-STM32全系列开发板-CMSIS_RTOS任务管理实验！\n\n");
 	printf("按下KEY1挂起任务，按下KEY2恢复任务\n");
 	/* Infinite loop */
 	for(;;)
@@ -159,15 +159,15 @@ void KEY_Task(void *argument)
 	for(;;)
 	{
 	    if( Key_Scan(KEY1_GPIO_PORT,KEY1_PIN) == KEY_ON )
-	    {/* K1 被按下 */
+	    {/* K1 被按�? */
 	    	printf("挂起LED任务！\n");
 	    	osThreadSuspend(LEDTaskHandle);/* 挂起LED任务 */
 	    	printf("挂起LED任务成功！\n");
 	    }
 	    if( Key_Scan(KEY2_GPIO_PORT,KEY2_PIN) == KEY_ON )
-	    {/* K2 被按下 */
+	    {/* K2 被按�? */
 	      printf("恢复LED任务！\n");
-	      osThreadResume(LEDTaskHandle);/* 恢复LED任务！ */
+	      osThreadResume(LEDTaskHandle);/* 恢复LED任务�? */
 	      printf("恢复LED任务成功！\n");
 	    }
 
