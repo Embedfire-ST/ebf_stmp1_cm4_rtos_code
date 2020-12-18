@@ -51,18 +51,18 @@
 
 /* USER CODE END Variables */
 /* Definitions for LEDTask */
-osThreadId_t LEDTaskHandle;
+osThreadId_t LEDTaskHandle;			//定义线程ID
 const osThreadAttr_t LEDTask_attributes = {
-  .name = "LEDTask",
-  .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
+  .name = "LEDTask",							//LED线程名
+  .priority = (osPriority_t) osPriorityNormal,  //线程优先级
+  .stack_size = 128 * 4							//栈大小
 };
 /* Definitions for KEYTask */
-osThreadId_t KEYTaskHandle;
+osThreadId_t KEYTaskHandle;						//定义线程ID
 const osThreadAttr_t KEYTask_attributes = {
-  .name = "KEYTask",
-  .priority = (osPriority_t) osPriorityLow,
-  .stack_size = 128 * 4
+  .name = "KEYTask",							//按键任务
+  .priority = (osPriority_t) osPriorityNormal1,	//线程优先级
+  .stack_size = 128 * 4							//栈大小
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,17 +128,13 @@ void MX_FREERTOS_Init(void) {
 void LED_Task(void *argument)
 {
   /* USER CODE BEGIN LED_Task */
-	printf("这是�?个[野火]-STM32全系列开发板-CMSIS_RTOS任务管理实验！\n\n");
+	printf("这是一个[野火]-STM32全系列开发板-CMSIS_RTOS任务管理实验！\n\n");
 	printf("按下KEY1挂起任务，按下KEY2恢复任务\n");
 	/* Infinite loop */
 	for(;;)
 	{
-		LED1_ON;
-		printf("LED_Task Running,LED1_ON\r\n");
-		osDelay(500);   /* 延时500个tick */
-
-		LED1_OFF;
-		printf("LED_Task Running,LED1_OFF\r\n");
+		LED1_TOGGLE;
+		printf("LED_Task Running......\r\n");
 		osDelay(500);   /* 延时500个tick */
 
 	}
@@ -154,21 +150,28 @@ void LED_Task(void *argument)
 /* USER CODE END Header_KEY_Task */
 void KEY_Task(void *argument)
 {
+	osStatus_t osStatus;
+
   /* USER CODE BEGIN KEY_Task */
   /* Infinite loop */
 	for(;;)
 	{
 	    if( Key_Scan(KEY1_GPIO_PORT,KEY1_PIN) == KEY_ON )
-	    {/* K1 被按�? */
-	    	printf("挂起LED任务！\n");
-	    	osThreadSuspend(LEDTaskHandle);/* 挂起LED任务 */
-	    	printf("挂起LED任务成功！\n");
+	    {/* K1 被按下 */
+	    	osStatus = osThreadSuspend(LEDTaskHandle);/* 挂起LED任务 */
+	    	if( osOK == osStatus )
+	    	{
+	    		printf("挂起LED任务成功！\n");
+	    	}
 	    }
 	    if( Key_Scan(KEY2_GPIO_PORT,KEY2_PIN) == KEY_ON )
-	    {/* K2 被按�? */
-	      printf("恢复LED任务！\n");
-	      osThreadResume(LEDTaskHandle);/* 恢复LED任务�? */
-	      printf("恢复LED任务成功！\n");
+	    {/* K2 被按下 */
+
+	    	osStatus = osThreadResume(LEDTaskHandle);/* 恢复LED任务 */
+	    	if( osOK == osStatus )
+	    	{
+	    		printf("恢复LED任务成功！\n");
+	    	}
 	    }
 
 	    osDelay(20);
