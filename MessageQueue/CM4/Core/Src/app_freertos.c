@@ -53,14 +53,14 @@ osThreadId_t ReceiveTaskHandle;
 const osThreadAttr_t ReceiveTask_attributes = {
   .name = "ReceiveTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 256 * 4
+  .stack_size = 128 * 4
 };
 /* Definitions for SendTask */
 osThreadId_t SendTaskHandle;
 const osThreadAttr_t SendTask_attributes = {
   .name = "SendTask",
-  .priority = (osPriority_t) osPriorityLow,
-  .stack_size = 256 * 4
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 128 * 4
 };
 /* Definitions for Test_Queue */
 osMessageQueueId_t Test_QueueHandle;
@@ -134,9 +134,9 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_Receive_Task */
 void Receive_Task(void *argument)
 {
-	/* USER CODE BEGIN Receive_Task */
-	osStatus_t xReturn = osOK;/* 定义一个创建信息返回值，默认为osOK */
-	uint32_t r_queue;	/* 定义一个接收消息的变量 */
+  /* USER CODE BEGIN Receive_Task */
+	osStatus_t xReturn = osOK;
+	uint32_t r_queue;	/* 接收消息的变量 */
 	/* Infinite loop */
 	for(;;)
 	{
@@ -146,13 +146,13 @@ void Receive_Task(void *argument)
 									0,			/* 发送优先级*/
 									osWaitForever);  /*永远等待 */
 	    if(osOK == xReturn)
-	      printf("本次接收到的数据是%d\n\n",r_queue);
+	      printf("本次接收到的数据为%d\n\n",r_queue);
 	    else
 	      printf("数据接收出错,错误代码0x%lx\n",xReturn);
 
 
 	}
-	/* USER CODE END Receive_Task */
+  /* USER CODE END Receive_Task */
 }
 
 /* USER CODE BEGIN Header_Send_Task */
@@ -165,7 +165,7 @@ void Receive_Task(void *argument)
 void Send_Task(void *argument)
 {
   /* USER CODE BEGIN Send_Task */
-	osStatus_t xReturn = osOK;/* 定义一个创建信息返回值，默认为osOK */
+	osStatus_t xReturn = osOK;
 	uint32_t send_data1 = 1;
 	uint32_t send_data2 = 2;
 
@@ -175,7 +175,7 @@ void Send_Task(void *argument)
 	    if( Key_Scan(KEY1_GPIO_PORT,KEY1_PIN) == KEY_ON )
 	    {/* K1 被按下 */
 	      printf("发送消息send_data1！\n");
-	      xReturn = osMessageQueuePut( Test_QueueHandle, /* 消息队列的句柄 */
+	      xReturn = osMessageQueuePut( Test_QueueHandle, /* 消息队列的句柄*/
 	                            &send_data1,/* 发送的消息内容 */
 								0,			/* 发送优先级*/
 	                            0 );        /* 等待时间 0 */
@@ -183,7 +183,7 @@ void Send_Task(void *argument)
 //	        printf("消息send_data1发送成功!\n\n");
 	    }
 	    if( Key_Scan(KEY2_GPIO_PORT,KEY2_PIN) == KEY_ON )
-	    {/* K2 被按下 */
+	    {/* K2 被按下*/
 	      printf("发送消息send_data2！\n");
 	      xReturn = osMessageQueuePut( Test_QueueHandle, /* 消息队列的句柄 */
 	                            &send_data2,/* 发送的消息内容 */
