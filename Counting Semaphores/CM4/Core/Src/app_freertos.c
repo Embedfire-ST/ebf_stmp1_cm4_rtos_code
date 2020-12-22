@@ -85,7 +85,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+  printf("STM32MP157 FreeRTOS 计数信号量实验\n");
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -145,11 +145,11 @@ void Take_Task(void *argument)
 									0); /* 等待时间 */
 			if(osOK == xReturn)
 			{
-				printf("Conuting_Handle二值信号量获取成功!\n");
+				printf("Conuting_Handle信号量获取成功!\n");
 			}
 			else
 			{
-				printf("Conuting_Handle二值信号量获取失败!\n");
+				printf("Conuting_Handle信号量获取失败!\n");
 			}
 
 		}
@@ -178,11 +178,11 @@ void Give_Task(void *argument)
 			xReturn = osSemaphoreRelease( CountingSemHandle );//给出信号量
 			if( xReturn == osOK )
 			{
-				printf("Conuting_Handle二值信号量释放成功!\r\n");
+				printf("Conuting_Handle信号量释放成功!\r\n");
 			}
 			else
 			{
-				printf("Conuting_Handle二值信号量释放失败!\r\n");
+				printf("Conuting_Handle	信号量释放失败!\r\n");
 			}
 
 		}
