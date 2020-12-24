@@ -93,7 +93,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+	printf("这是一个[野火]-STM32 FreeRTOS 互斥量实验！\n");
   /* USER CODE END Init */
   /* Create the mutex(es) */
   /* creation of Mutex01 */
@@ -151,7 +151,7 @@ void LowPriority_Task(void *argument)
 
 	for(;;)
 	{
-		printf("LowPriority_Task 获取互斥量\n");
+		printf("LowPriority_Task 正在获取互斥量......\n");
 		ret = osMutexAcquire (Mutex01Handle, osWaitForever);
 		if( ret == osOK)
 		{
@@ -206,6 +206,7 @@ void HighPriority_Task(void *argument)
 	for(;;)
 	{
 		//获取互斥量
+		printf("HighPriority_Task 正在获取互斥量.......\n");
 		ret = osMutexAcquire (Mutex01Handle, osWaitForever);
 		if( ret == osOK)
 		{
