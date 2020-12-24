@@ -105,8 +105,7 @@ void MX_FREERTOS_Init(void) {
   Timer02Handle = osTimerNew(Swtmr2_Callback, osTimerOnce, NULL, &Timer02_attributes);
 
   /* USER CODE BEGIN RTOS_TIMERS */
-  osTimerStart (Timer01Handle, 1000);
-  osTimerStart (Timer02Handle, 5000);
+
 
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
@@ -139,6 +138,8 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
+  osTimerStart (Timer01Handle, 1000);
+  osTimerStart (Timer02Handle, 5000);
   /* Infinite loop */
   for(;;)
   {
