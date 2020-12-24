@@ -93,7 +93,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+  printf("这是一个[野火]-STM32 FreeRTOS 优先级翻转实验！\n");
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -151,11 +151,11 @@ void LowPriority_Task(void *argument)
 	osStatus_t xReturn;
 	for(;;)
 	{
-		printf("LowPriority_Task 获取信号量\n");
+		printf("LowPriority_Task 正在获取信号量......\n");
 		//获取二值信号量 xSemaphore,没获取到则一直等待
 		xReturn = osSemaphoreAcquire (BinarySem01Handle, osWaitForever);
 		if( xReturn == osOK )
-			printf("LowPriority_Task Running\n\n");
+			printf("LowPriority_Task Running\n");
 
 		for(i=0;i<2000000;i++)//模拟低优先级任务占用信号量
 		{
@@ -202,10 +202,9 @@ void HighPriority_Task(void *argument)
 	osStatus_t xReturn;
 	for(;;)
 	{
-		printf("HighPriority_Task 获取信号量\n");
+		printf("HighPriority_Task 正在获取信号量.......\n");
 		//获取二值信号量 xSemaphore,没获取到则一直等待
 		xReturn = osSemaphoreAcquire (BinarySem01Handle, osWaitForever);
-
 		if(osOK == xReturn)
 			printf("HighPriority_Task Running\n");
 
